@@ -1,6 +1,8 @@
-show databases;
+-- GITHUB: https://github.com/rahardia79/mysql-lab1
+
+-- show databases;
 use state;
-show tables;
+-- show tables;
 
 -- Exercise 1:
 -- What is the abbreviation of New York State?
@@ -53,6 +55,16 @@ on areaTable.abbreviation =popTable.region;
 -- Exercise 8:
 -- What are the top 3 most populated states for each year? Return year, state, rank, and (total) population. (Hint: window functions)
 
-
-
+select * from (
+	select
+		year, region as state,
+        rank() over (
+			partition by year
+            order by population desc
+		) as nthplace,
+         population 
+	from population
+    where (region !="USA" and ages="total")
+    ) as ranked
+where ranked.nthplace <=3;
 
