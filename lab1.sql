@@ -44,6 +44,15 @@ select * from areas where state = (select state from abbrevs where abbreviation 
 -- Exercise 7:
 -- What is the (total) population density per square mile (round to 2 decimal places) for each state in 2013?
 
--- Exercise 8:
+select region, round(population/area,2) as 2013density_peoplepersqmile from 
+	(select abbreviation, area from areas join abbrevs on areas.state = abbrevs.state) as areaTable join
+    (select region, population from population where (region!="USA" and ages="total" and year = "2013")) as popTable
+on areaTable.abbreviation =popTable.region;
 
+
+-- Exercise 8:
 -- What are the top 3 most populated states for each year? Return year, state, rank, and (total) population. (Hint: window functions)
+
+
+
+
